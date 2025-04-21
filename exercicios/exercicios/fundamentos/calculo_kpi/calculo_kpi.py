@@ -129,12 +129,4 @@ def calcular_kpi(salario_usuario: float, multiplicador: float) -> float:
     return bonus_total
 
 
-if __name__ == '__main__':
-    nome_usuario = coletar_nome()
-    salario_usuario = coletar_salario()
-    multiplicador = identificar_desempenho()
-    bonus_total = calcular_kpi(salario_usuario=salario_usuario,
-                               multiplicador=multiplicador)
 
-    print(
-        f'O valor calculado para o bonus do funcionário {nome_usuario} é R$ {bonus_total:.2f}.')
