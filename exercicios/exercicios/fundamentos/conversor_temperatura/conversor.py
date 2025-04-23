@@ -1,48 +1,43 @@
 '''
-    Programa em Python que solicita ao usuário para digitar uma opção de conversão, 
+    Programa em Python que solicita ao usuário para digitar uma opção de conversão de temperatura, 
     e uma temperatura a ser convertida. 
     O programa então, devera imprimir uma mensagem informando o valor da temperatura convertido.
 '''
 
 
-def converter_celcius_para_fahrenheit(celcius):
-    """_summary_
+def converter_celcius_para_fahrenheit(temperatura):
+    """Função que converte a temperatura de celcius para fahrenheit
 
     Args:
-        celcius (_type_): _description_
-
-    Raises:
-        ValueError: _description_
+        temperatura (_type_): Valor numerico informado pelo usuario para conversão
 
     Returns:
-        _type_: _description_
+        _type_: Temperatura convertida de celcius para fahrenheit
     """
-    return (celcius * 9/5) + 32
+    return (temperatura * 9/5) + 32
 
 
-def converter_fahrenheit_para_celcius(fahrenheit):
-    """_summary_
+def converter_fahrenheit_para_celcius(temperatura):
+    """Função que converte a temperatura de fahrenheit para celcius 
 
     Args:
-        fahrenheit (_type_): _description_
-
-    Raises:
-        ValueError: _description_
+        temperatura (_type_): Valor numerico informado pelo usuario para conversão
 
     Returns:
-        _type_: _description_
+        _type_: Temperatura convertida de fahrenheit para celcius 
     """
-    return (fahrenheit - 32) * 5/9
+    return (temperatura - 32) * 5/9
 
 
 def escolher_conversao():
-    """_summary_
+    """Função que retorna a conversão escolhida pelo usuário
 
     Raises:
-        ValueError: _description_
+    ValueError: A opção desejada deve ser um número.
+    ValueError: Opção desejada inexistente.
 
     Returns:
-        _type_: _description_
+        _type_: Conversão escolhida pelo usuario sendo 1 para Celsius -> Fahrenheit ou 2 para Fahrenheit -> Celsius.
     """
     print('Bem vindo ao Conversor de Temperaturas. '
           'Escolha uma das opções: \n'
@@ -74,12 +69,63 @@ def escolher_conversao():
 
 
 def captar_temperatura():
-    pass
+    """Função que capta a temperatura infromada pelo usuario para realizar a conversão
+
+    Raises:
+        ValueError: A temperatura deve ser um numero.
+
+    Returns:
+        _type_: Temperatura informada para conversão.
+    """
+    tentativa = 0
+    while tentativa < 3:
+        try:
+            temperatura = input('Informe a temperatura para conversão: ')
+            if not temperatura.isdigit():
+                raise ValueError('A temperatura deve ser um numero.')
+            temperatura = float(temperatura)
+        except Exception as e:
+            print(e)
+            tentativa += 1
+            if tentativa == 3:
+                print('Número de tentativas excedido. Tente novamente.')
+            else:
+                print(f'Tentativas restantes: {3 - tentativa}')
+        else:
+            return temperatura
 
 
-def conversor_de_temperaturas():
-    pass
+def conversor_de_temperaturas(escolha, temperatura):
+    """Função que converte a temperatura informada a partir da opção de conversão selecionada pelo usuario 
+
+    Args:
+        escolha (_type_): retorno da função escolher_conversao()
+        temperatura (_type_): retorno da função captar_temperatura()
+
+    Raises:
+        ValueError: Escolha inválida. Use 1 para Celsius -> Fahrenheit ou 2 para Fahrenheit -> Celsius.
+
+    Returns:
+        _type_: Temperatura convertida a partir da temperatura informada e da opção de conversão selecionada pelo usuario 
+    """
+    if escolha == 1:
+        return converter_celcius_para_fahrenheit(temperatura)
+    elif escolha == 2:
+        return converter_fahrenheit_para_celcius(temperatura)
+    else:
+        raise ValueError(
+            "Escolha inválida. Use 1 para Celsius -> Fahrenheit ou 2 para Fahrenheit -> Celsius.")
 
 
 if __name__ == '__main__':
-    escolher_conversao()
+    escolha = escolher_conversao()
+    temperatura = captar_temperatura()
+    temperatura_convertida = conversor_de_temperaturas(
+        escolha=escolha, temperatura=temperatura)
+
+    if escolha == 1:
+        print(
+            f'A conversão de {temperatura}˚Celsius para Fahrenheit é {temperatura_convertida}˚F.')
+    elif escolha == 2:
+        print(
+            f'A conversão de {temperatura}˚ Fahrenheit para Celsius é {temperatura_convertida}˚C.')

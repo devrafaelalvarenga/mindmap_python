@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "conversor-temperatura"
+version = "0.1.0"
+description = "Programa em Python que solicita ao usuário para digitar uma opção de conversão de temperatura,"
+authors = ["e uma temperatura a ser convertida."]
+license = "O programa então, devera imprimir uma mensagem informando o valor da temperatura convertido."
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
