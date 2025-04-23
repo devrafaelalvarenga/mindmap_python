@@ -5,7 +5,7 @@
 '''
 
 
-def converter_celcius_para_fahrenheit(temperatura):
+def converter_celcius_para_fahrenheit(temperatura) -> float:
     """Função que converte a temperatura de celcius para fahrenheit
 
     Args:
@@ -17,7 +17,7 @@ def converter_celcius_para_fahrenheit(temperatura):
     return (temperatura * 9/5) + 32
 
 
-def converter_fahrenheit_para_celcius(temperatura):
+def converter_fahrenheit_para_celcius(temperatura) -> float:
     """Função que converte a temperatura de fahrenheit para celcius 
 
     Args:
@@ -29,7 +29,7 @@ def converter_fahrenheit_para_celcius(temperatura):
     return (temperatura - 32) * 5/9
 
 
-def escolher_conversao():
+def escolher_conversao() -> int:
     """Função que retorna a conversão escolhida pelo usuário
 
     Raises:
@@ -45,10 +45,10 @@ def escolher_conversao():
           '2 - Converter fahrenheit para celcius \n'
           '3 - Sair \n')
 
-    tentativa = 0
+    tentativa: int = 0
     while tentativa < 3:
         try:
-            opcao_desejada = input('Informe a opção desejada: ')
+            opcao_desejada: str = input('Informe a opção desejada: ')
             if not opcao_desejada.isdigit():
                 raise ValueError('A opção desejada deve ser um número.')
             opcao_desejada = int(opcao_desejada)
@@ -77,10 +77,10 @@ def captar_temperatura():
     Returns:
         _type_: Temperatura informada para conversão.
     """
-    tentativa = 0
+    tentativa: int = 0
     while tentativa < 3:
         try:
-            temperatura = input('Informe a temperatura para conversão: ')
+            temperatura: str = input('Informe a temperatura para conversão: ')
             if not temperatura.isdigit():
                 raise ValueError('A temperatura deve ser um numero.')
             temperatura = float(temperatura)
@@ -95,7 +95,7 @@ def captar_temperatura():
             return temperatura
 
 
-def conversor_de_temperaturas(escolha, temperatura):
+def conversor_de_temperaturas(escolha: int, temperatura: float) -> float:
     """Função que converte a temperatura informada a partir da opção de conversão selecionada pelo usuario 
 
     Args:
