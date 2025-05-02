@@ -1,25 +1,23 @@
 import unicodedata
 
-lista = [
-    "  leite  ", "pão", "ARROZ", "Feijão", "pão", "chocolate", "refrigerante",
-    "feijao", "arroz ", "Cerveja", "água", "leite", "macarrão ", " GuarANÁ  ", "lImão",
-    "BATATA", "peixE", "Vinagre    "
-]
-
 
 def criar_lista_de_compra() -> dict:
-    """    
-    Cria uma lista de compras organizada por categorias: alimento, higiene, limpeza e outros.
-    Permite ao usuário adicionar itens a cada categoria ou encerrar o programa.
+    """
+        Cria uma lista de compras categorizada com base na entrada do usuário.
+
+        A função permite ao usuário adicionar itens a categorias predefinidas
+        ('alimento', 'higiene', 'limpeza', 'outros') ou encerrar o processo.
+        Ela valida a entrada do usuário e garante que os itens sejam únicos dentro de cada categoria.
 
     Raises:
-        Exception: Se a categoria informada não for válida.
-        Exception: Se o item informado não for válido.
-        Exception: Se o número de tentativas exceder o limite permitido.
-        ValueError: Se o programa for encerrado sem itens adicionados.
+        Exception: Se a entrada da categoria for inválida (não for um dígito ou estiver fora do intervalo).
+        Exception: Se a entrada do item for inválida (contiver caracteres não alfabéticos).
+        ValueError: Se o usuário exceder o número máximo de tentativas inválidas (3).
 
-    Returns:
-        dict: Um dicionário contendo as categorias como chaves e os itens adicionados como valores.
+    Returns:    
+        dict: Um dicionário contendo a lista de compras categorizada.
+        As chaves são os nomes das categorias ('alimento', 'higiene', 'limpeza', 'outros'),
+        e os valores são listas de itens únicos adicionados a cada categoria.
     """
     lista_de_compra: dict = {'alimento': [],
                              'higiene': [], 'limpeza': [], 'outros': []}
@@ -43,10 +41,16 @@ def criar_lista_de_compra() -> dict:
                 print('Programa encerrado. Lista vazia.')
                 break
             elif categoria == 5 and itens_incluidos > 0:
-                return lista_de_compra
+                for categoria, lista in lista_de_compra.items():
+                    lista_de_compra[categoria] = list(set(lista))
+                print(lista_de_compra)
+                break
 
             item: str = input(
-                f'Informe um item para anexar na lista da categoria: ').strip().lower()
+                f'Informe um item para anexar na lista da categoria: ')
+
+            item: str = unicodedata.normalize('NFKD', item).encode(
+                'ASCII', 'ignore').decode('ASCII').strip().lower()
 
             if not item.replace(" ", "").isalpha():
                 raise Exception('Item invalido.')
@@ -73,43 +77,6 @@ def criar_lista_de_compra() -> dict:
             else:
                 print(f'Tentativas restantes: {3 - tentativa}')
 
-# alterar a funcao abaixo visto que agora a lista de comra esta dentro de um dicionario
-
-
-def normalizar_lista_de_compra(lista: list) -> list:
-    """
-    Normaliza os itens de uma lista de strings, removendo espaços extras, 
-    convertendo para minúsculas e removendo acentos. Também remove dados duplicados.
-
-    Args:
-        lista (list): Lista de strings a ser normalizada.
-
-    Raises:
-        ValueError: Se a lista contiver números.
-        ValueError: Se a lista estiver vazia após a normalização.
-
-    Returns:
-        list: Lista normalizada e sem dados duplicados.
-    """
-    try:
-        lista_atualizada: list = []
-        for i in lista:
-            if i.isdigit():
-                raise ValueError('A lista não pode conter numeros.')
-            else:
-                item: str = unicodedata.normalize('NFKD', i.strip().lower()).encode(
-                    'ASCII', 'ignore').decode('ASCII')
-            lista_atualizada.append(item)
-        lista_atualizada = set(lista_atualizada)
-        if len(lista_atualizada) == 0:
-            raise ValueError('A lista esta vazia.')
-    except Exception as e:
-        print(e)
-        exit()
-    else:
-        print(lista_atualizada)
-
 
 if __name__ == '__main__':
     criar_lista_de_compra()
-    # normalizar_lista_de_compra(lista=lista)
